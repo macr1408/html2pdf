@@ -1488,7 +1488,8 @@ class Html2Pdf
             if (($this->pdf->GetY()+$h<$this->pdf->getH() - $this->pdf->getbMargin()) || $this->_isInOverflow || $this->_isInFooter) {
                 $this->_setNewLine($h, $curr);
             } else {
-                $this->_setNewPage(null, '', null, $curr);
+                $this->_setNewPositionForNewLine($curr);
+                //$this->_setNewPage(null, '', null, $curr);
             }
         } else {
             $this->_setNewPositionForNewLine($curr);
@@ -3230,7 +3231,7 @@ class Html2Pdf
                 $this->_tag_open_BR(array());
             }
 
-            if ($h < $maxH && $endY >= $maxY && !$this->_isInOverflow) {
+            if ($h < $maxH && $endY >= $maxY && !$this->_isInOverflow && ((!isset($param['class']) || strpos($param['class'], 'html2pdf-same-page') === false))) {
                 $this->_setNewPage();
             }
 
